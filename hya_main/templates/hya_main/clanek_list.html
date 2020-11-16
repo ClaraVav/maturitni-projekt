@@ -1,0 +1,33 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <style>a div div p { font-size: large; }</style>
+    <h2 style="font-weight: bold;">Všechny příspěvky:</h2>
+    <br>
+    {% for clanek in clanky %}
+        <a href="/clanek/{{clanek.id}}">
+            <div class="panel panel-warning" style="color: #E68A00;">
+                <div class="panel-heading">
+                    {% if clanek.kategorie == 1 %}
+                        <p>Nový inzerát na Bazoši</p>
+                    {% elif clanek.kategorie == 2 %}
+                        <p>Nová zpráva od BloxNews</p>
+                    {% elif clanek.kategorie == 3 %}
+                        <p>Nový příspěvek na InstaBloxu</p>
+                    {% elif clanek.kategorie == 4 %}
+                        <p>Nový příspěvek na internetu</p>
+                    {% elif clanek.kategorie == 5 %}
+                        <p>Nová zpráva od MÚ</p>
+                    {% endif %}
+                    <h3>{{ clanek.titulek }}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{{ clanek.obsah|linebreaksbr }}</p>
+                </div>
+                <div class="panel-footer">
+                    <small>{{ clanek.publikovano }}, by {{ clanek.autor }}</small>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}

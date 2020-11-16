@@ -1,0 +1,29 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <style>div.postava p { font-size: large; }</style>
+    <div class="postava">
+        <h3>{{ postava.cele_jmeno }}</h3>
+        <small>Majitel: {{ postava.majitel }}</small>
+        <hr>
+        <ul>
+            <li>Datum narození: {{ postava.narozeni }}</li>
+            <li>Národnost: {{ postava.narodnost }}</li>
+            <li>Výška: {{ postava.vyska }}cm</li>
+            <li>Víra: {{ postava.nabozenstvi }}</li>
+            <li>Politické zaměření: {{ postava.politika }}</li>
+            <li>Vzdělání: {{ postava.vzdelani }}</li>
+            <li>Rodiče: {{ postava.rodice }}</li>
+            <li>Jazyky: {{ postava.jazyky }}</li>
+            <li>Koníčky: {{ postava.hobby }}</li>
+        </ul>
+        <br>
+        <p>{{ postava.bio|linebreaksbr }}</p>
+
+        <hr>
+        {% if postava.majitel.id == user.id or user.is_staff %}
+            <a href="{% url 'postava_new' %}"><button type="button" class="btn btn-primary">Upravit</button></a>
+            <a href="{% url 'postava_new' %}"><button type="button" class="btn btn-danger">Smazat</button></a>
+        {% endif %}
+    </div>
+{% endblock %}

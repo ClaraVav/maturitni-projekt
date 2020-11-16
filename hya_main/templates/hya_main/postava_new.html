@@ -1,0 +1,64 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/ >
+    <script src="/jquery.js"></script>
+    <script src="/build/jquery.datetimepicker.full.min.js"></script>
+
+    <h3 class="text-center">Nová postava</h3><br>
+    <form method="POST" class="post-form">
+         {% csrf_token %}
+
+        <input id="jmeno" type="text" class="form-control" name="jmeno"
+            placeholder="Křestní jméno">
+        <br>
+        <input id="prijmeni" type="text" class="form-control" name="prijmeni"
+            placeholder="Příjmení">
+        <br>
+        <input id="narozeni" type="date" class="form-control" name="narozeni"
+            placeholder="Datum narození" value="2011-08-19">
+        <br>
+        <input id="narodnost" type="text" class="form-control" name="narodnost"
+            placeholder="Národnost">
+        <br>
+        <input id="vyznani" type="text" class="form-control" name="nabozenstvi"
+            placeholder="Vyznání">
+        <br>
+        <input id="politika" type="text" class="form-control" name="politika"
+            placeholder="Politická orientace">
+        <br>
+        <input id="vzdelani" type="text" class="form-control" name="vzdelani"
+            placeholder="Vzdělání">
+        <br>
+        <input id="hobbies" type="text" class="form-control" name="hobby"
+            placeholder="Koníčky">
+        <br>
+        <textarea id="bio" class="form-control" name="bio" placeholder="Něco o životě"></textarea>
+        <br><br>
+        <div class="text-center">
+            <button type="submit" class="save btn btn-success">Uložit</button>
+        </div>
+     </form>
+
+    <script>
+        jQuery.datetimepicker.setLocale('de');
+
+        jQuery('#narozeni').datetimepicker({
+         i18n:{
+          de:{
+           months:[
+            'Januar','Februar','März','April',
+            'Mai','Juni','Juli','August',
+            'September','Oktober','November','Dezember',
+           ],
+           dayOfWeek:[
+            "So.", "Mo", "Di", "Mi",
+            "Do", "Fr", "Sa.",
+           ]
+          }
+         },
+         timepicker:false,
+         format:'d.m.Y'
+        });
+    </script>
+{% endblock %}

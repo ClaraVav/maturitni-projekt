@@ -1,0 +1,23 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <style>h2 { color: #FF9900; }</style>
+    <form class="col-sm-6 col-offset-6 post-form text-center" method="POST">
+        <br>
+        <h2>Přihlášení</h2>
+        {% csrf_token %}
+        <br><br><br>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input id="jmeno" type="text" class="form-control" name="username"
+                       placeholder="Přihlašovací jméno">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input id="heslo" type="password" class="form-control" name="password" placeholder="Heslo">
+            </div>
+        <br>
+        <button type="submit" class="save btn btn-outline-primary">Přihlásit se</button>
+    </form>
+{% endblock %}

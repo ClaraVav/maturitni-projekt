@@ -1,0 +1,17 @@
+{% extends 'althani/main.html' %}
+
+{% block content %}
+
+{% autoescape off %}
+    {{ page.content }}
+{% endautoescape %}
+
+{% if page.author.id == user.id or user.is_staff %}
+<div class="text-right" style="padding: 10px; background-color: rgb(26, 26, 26);">
+    <a href="/edit/{{ page.urltitle }}"><button class="btn btn-info">Edit</button></a>
+    &nbsp; &nbsp;
+    <a href="/delete/{{ page.urltitle }}"><button class="btn btn-danger">Delete</button></a>
+</div>
+{% endif %}
+
+{% endblock %}

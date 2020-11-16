@@ -1,0 +1,40 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <h1>Nový článek</h1>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <br><br>
+            Titulek:
+            <input id="titulek" type="text" class="form-control" name="titulek"
+            placeholder="Titulek">
+        <br>
+            Postava, ze kterou je článek vydán:
+            <select class="form-control" id="postava" name="postava">
+                {% for postava in postavy %}
+                    {% if postava.majitel.id == user.id %}
+                        <option value="{{ postava.id }}">{{ postava.cele_jmeno }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        <br>
+            Kategorie:
+            <select class="form-control" id="kategorie" name="kategorie">
+                <option value="1">Bazoš</option>
+                <option value="2">BloxNews</option>
+                <option value="3">InstaBlox</option>
+                <option value="4">Internet</option>
+                <option value="5">Úřední deska</option>
+            </select>
+        <br>
+            Obsah:
+            <textarea id="obsah" class="form-control" name="obsah" placeholder="Obsah"></textarea>
+        <br>
+            Obrázek k článku:
+            <input id="obrazek" type="file" class="form-control-file" name="obrazek">
+        <br><br>
+        <div class="text-center">
+            <button type="submit" class="save btn btn-success">Uložit článek</button>
+        </div>
+     </form>
+{% endblock %}

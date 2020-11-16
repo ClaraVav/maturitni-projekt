@@ -1,0 +1,26 @@
+{% extends 'althani/main.html' %}
+
+{% block content %}
+    <h1>Page editor</h1>
+    <div class="row">
+        <div class="col-sm-2"> </div>
+        <form class="col-sm-8 col-sm-offset-8 post-form" method="POST">
+        {% csrf_token %}
+                <h4>Title</h4>
+                <input id="title-nocon" type="text" class="form-control" name="title"
+                placeholder="Title">
+            <br>
+                <h4>Tags</h4>
+                <input id="tags-nocon" type="text" class="form-control" name="tags"
+                       placeholder="Tags - separate with commas">
+                <small class="form-text text-muted">Please separate with commas</small>
+            <br><br>
+                <h4>Page content</h4>
+                <textarea id="content-nocon" class="form-control" name="content" placeholder="Code"></textarea>
+            <br>
+                <div class="text-center"><button type="submit" class="save btn btn-default">Done</button></div>
+
+        </form>
+    </div>
+
+{% endblock %}

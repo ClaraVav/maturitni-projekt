@@ -1,0 +1,32 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <style>a div div p { font-size: large; }</style>
+    <h3>
+        {% if user.is_authenticated %}
+            <a href="{% url 'clanek_edit' %}" class="top-menu">
+                Přidat článek <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        {% endif %}
+    </h3>
+    {% for clanek in clanky %}
+        {% if clanek.kategorie == 5 %}
+            <a href="/clanek/{{clanek.id}}">
+                <div class="panel panel-warning" style="color: #E68A00;">
+                    <div class="panel-heading">
+                        <h3>{{ clanek.titulek }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>{{ clanek.obsah|linebreaksbr }}</p>
+                        {% if clanek.obrazek %}
+                            {{ clanek.obrazek }}
+                        {% endif %}
+                    </div>
+                    <div class="panel-footer">
+                        <small>{{ clanek.publikovano }}</small>
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

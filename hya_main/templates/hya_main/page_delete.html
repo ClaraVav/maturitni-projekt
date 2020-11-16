@@ -1,0 +1,16 @@
+{% extends 'althani/main.html' %}
+
+{% block content %}
+    <h2>Page editor</h2>
+    <div class="row">
+        <div class="col-sm-2"> </div>
+        <form class="col-sm-8 col-sm-offset-8 post-form text-center" method="POST">
+        {% csrf_token %}
+                <h3>{{ page.title }}</h3><br><br>
+                <h5>Are you sure you want to delete this page ?</h5><br>
+                <div class="text-center"><button type="submit" class="save btn btn-danger">Yes</button></div>
+        </form>
+    </div>
+
+
+{% endblock %}

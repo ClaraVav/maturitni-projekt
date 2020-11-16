@@ -1,0 +1,23 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+    <h3 style="font-weight: bold;">Profil</h3>
+    <ul>
+        <li>ID: {{ user.id }}</li>
+        <li>Jméno: {{ user.username }}</li>
+    </ul>
+    <br><br>
+    <h4 style="font-weight: bold; color: black;">Postavy:</h4>
+    <ol>
+        {% for postava in postavy %}
+            {% if postava.majitel.id == user.id %}
+                <li>
+                    <a href="/postava/{{postava.id}}">{{ postava.cele_jmeno }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+    <br>
+    <a href="{% url 'postava_new' %}"><button type="submit" class="btn btn-primary">Nová postava</button></a>
+    <br>
+{% endblock %}
