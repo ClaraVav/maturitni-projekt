@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^postava/delete/(?P<pk>[0-9]+)/$', views.postava_delete, name='postava_delete'),
 
     # url(r'^$', views.page_list, name="page_list"),
-    url(r'^(?P<urltitle>[\w\+%_& ]+)/$', views.page_detail, name="page_detail"),
+    url(r'stranky/^(?P<urltitle>[\w\+%_& ]+)/$', views.page_detail, name="page_detail"),
     url(r'^new/$', views.page_new, name="page_new"),
     url(r'^edit/(?P<urltitle>[\w\+%_& ]+)/$', views.page_edit, name="page_edit"),
     url(r'^delete/(?P<urltitle>[\w\+%_& ]+)/$', views.page_delete, name="page_delete"),

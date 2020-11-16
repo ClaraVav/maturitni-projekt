@@ -192,4 +192,29 @@
         </footer>
         <!--<script src="../../../node_modules/lightbox2/dist/js/lightbox-plus-jquery.js"></script>-->
     </body>
+    <link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/>
+    <script src="/jquery.js"></script>
+    <script src="/build/jquery.datetimepicker.full.min.js"></script>
+
+    <script>
+        jQuery.datetimepicker.setLocale('cs');
+
+        jQuery('#narozeni').datetimepicker({
+         i18n:{
+          cs:{
+           months:[
+            'Leden','Únor','Březen','Duben',
+            'Květen','Červen','Červenec','Srpen',
+            'Září','ŘÍjen','Listopad','Prosinec',
+           ],
+           dayOfWeek:[
+            "Po", "Út", "St",
+            "Čt", "Pá", "So", "Ne"
+           ]
+          }
+         },
+         timepicker:false,
+         format:'d.m.Y'
+        });
+    </script>
 </html>

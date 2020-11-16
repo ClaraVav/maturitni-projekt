@@ -23,14 +23,16 @@ def clanek_new(request):
     postavy = Postava.objects.order_by('prijmeni')
     IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
     if request.method == "POST":
-        form = ClanekForm(request, request.POST, request.FILES)
+        form = ClanekForm(request, request.POST)
+        # form = ClanekForm(request, request.POST, request.FILES)
         if form.is_valid:
             clanek = form.save()
-            clanek.obrazek = request.FILES['obrazek']
-            file_type = clanek.obrazek.url.split('.')[-1]
-            file_type = file_type.lower()
-            if file_type not in IMAGE_FILE_TYPES:
-                print("Wrong type:", file_type)
+            clanek.obrazek = None
+            # clanek.obrazek = request.FILES['obrazek']
+            # file_type = clanek.obrazek.url.split('.')[-1]
+            # file_type = file_type.lower()
+            # if file_type not in IMAGE_FILE_TYPES:
+                # print("Wrong type:", file_type)
             clanek.autor = request.user
             clanek.publikovano = timezone.now()
             clanek.save()

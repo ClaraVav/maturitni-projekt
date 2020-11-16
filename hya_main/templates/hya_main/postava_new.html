@@ -1,10 +1,6 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css"/ >
-    <script src="/jquery.js"></script>
-    <script src="/build/jquery.datetimepicker.full.min.js"></script>
-
     <h3 class="text-center">Nová postava</h3><br>
     <form method="POST" class="post-form">
          {% csrf_token %}
@@ -21,6 +17,9 @@
         <input id="narodnost" type="text" class="form-control" name="narodnost"
             placeholder="Národnost">
         <br>
+        <input id="vyska" type="number" class="form-control" name="vyska"
+            placeholder="Výška v cm">
+        <br>
         <input id="vyznani" type="text" class="form-control" name="nabozenstvi"
             placeholder="Vyznání">
         <br>
@@ -29,6 +28,9 @@
         <br>
         <input id="vzdelani" type="text" class="form-control" name="vzdelani"
             placeholder="Vzdělání">
+        <br>
+        <input id="rodice" type="text" class="form-control" name="rodice"
+            placeholder="Rodiče">
         <br>
         <input id="hobbies" type="text" class="form-control" name="hobby"
             placeholder="Koníčky">
@@ -39,26 +41,4 @@
             <button type="submit" class="save btn btn-success">Uložit</button>
         </div>
      </form>
-
-    <script>
-        jQuery.datetimepicker.setLocale('de');
-
-        jQuery('#narozeni').datetimepicker({
-         i18n:{
-          de:{
-           months:[
-            'Januar','Februar','März','April',
-            'Mai','Juni','Juli','August',
-            'September','Oktober','November','Dezember',
-           ],
-           dayOfWeek:[
-            "So.", "Mo", "Di", "Mi",
-            "Do", "Fr", "Sa.",
-           ]
-          }
-         },
-         timepicker:false,
-         format:'d.m.Y'
-        });
-    </script>
 {% endblock %}

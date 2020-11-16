@@ -1,0 +1,17 @@
+{
+  "name": "maturitni_projekt",
+  "homepage": "https://github.com/ClaraVav/maturitni-projekt",
+  "authors": [
+    "ClaraVav <klarka.vav1@seznam.cz>"
+  ],
+  "description": "",
+  "main": "manage.py",
+  "license": "none",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

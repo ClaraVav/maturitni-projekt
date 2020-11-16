@@ -10,14 +10,11 @@
         {% endif %}
         <hr>
         <p>{{ clanek.obsah|linebreaksbr }}</p>
-        {% if clanek.obrazek %}
-            {{ clanek.obrazek }}
-        {% endif %}
         {% if clanek.kategorie == 2 %}
             <p>{{ clanek.postava.cele_jmeno }} pro BloxNews</p>
         {% endif %}
         {% if clanek.obrazek %}
-            {{ clanek.obrazek }}
+            <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.img }}">
         {% endif %}
         <hr>
         {% if clanek.autor == user.username or user.is_staff %}
