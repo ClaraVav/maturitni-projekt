@@ -3,26 +3,33 @@
 {% block content %}
     <style>a div div p { font-size: large; }</style>
     <h3>
-        {% if user.is_authenticated %}
-            <a href="{% url 'clanek_edit' %}" class="top-menu">
-                Přidat článek <span class="glyphicon glyphicon-plus"></span>
-            </a>
-        {% endif %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'clanek_edit' %}" class="top-menu">
+        Přidat článek <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    {% endif %}
     </h3>
     {% for clanek in clanky %}
         {% if clanek.kategorie == 4 %}
             <a href="/clanek/{{clanek.id}}">
-                <div class="panel panel-warning" style="color: #E68A00;">
-                    <div class="panel-heading">
-                        <h3>{{ clanek.titulek }}</h3>
+                <div class="card bg-light" style="color: #E68A00; margin-bottom: 15px; border: 3px solid #FFDA44">
+                    <div class="card-header" style="background-color: #F8FF95;">
+                        <h4>{{ clanek.titulek }}</h4>
                     </div>
-                    <div class="panel-body">
-                        <p>{{ clanek.obsah|linebreaksbr }}</p>
-                        {% if clanek.obrazek %}
-                            {{ clanek.obrazek }}
-                        {% endif %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <p>{{ clanek.obsah|linebreaksbr }}</p>
+                            </div>
+                            {% if clanek.obrazek is not None %}
+                            <div class="col-sm-4 text-right">
+                                <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.obrazek.url }}" height="150px"
+                                     style="border: 3px solid #F0C000; border-radius: 3px; padding: 2px;">
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="panel-footer">
+                    <div class="card-footer text-muted">
                         <small>{{ clanek.publikovano }}, by {{ clanek.autor }}</small>
                     </div>
                 </div>

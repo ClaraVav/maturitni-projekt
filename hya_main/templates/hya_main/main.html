@@ -15,9 +15,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
               crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="{% static 'jquery-2.1.3.min.js' %}"></script> -->
+        <link href="../../../../static/lightbox/lightbox2-2.11.3/src/css/lightbox.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
                 integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
                 crossorigin="anonymous"></script>
@@ -26,11 +26,12 @@
                 crossorigin="anonymous"></script>
         <!--<link rel="stylesheet" href="../../../node_modules/lightbox2/dist/css/lightbox.css">-->
         <style>
-            a:hover {color: #e68a00; text-decoration: none;}
-            a {color: #FF9900;}
+            a:hover {color: #0f3d0f; text-decoration: none;}
+            a {color: #248f24;}
             li {font-size: large;}
+            a.nav-link { padding-left: 4px; padding-right: 4px; }
             main {margin: 5px;}
-            h3, main h4 {color: #FF9900;}
+            h3, main h4 {color: #248F24;}
             h1 {text-align: center;}
             footer {
                 background-color: black;
@@ -42,53 +43,63 @@
                 padding-right: 15px;
             }
             a:hover h3, a:hover h4 {font-weight: bold;}
-            label {font-weight: bold; color: #FF9900;}
+            label {font-weight: bold; color: #248f24;}
             footer h4 {font-weight: bold; color: white;}
+            hr.dashed {border-top: 3px dashed #bbb;}
         </style>
     </head>
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg" style="background-color: #000;">
-                <a class="navbar-brand" href="#"><h3 style="font-weight: bold;">HYDRA</h3></a>
+            <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #000;">
+                <a class="navbar-brand" href="/"><h3 style="font-weight: bold;">HYDRA</h3></a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <span style="font-size: 1.4em; font-weight: bold;"> | </span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Domů</a>
+                            <a class="nav-link" href="/" style="padding-left: 8px; padding-right: 4px;">Domů</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/pravidla">Pravidla hry</a>
+                            <a class="nav-link" href="/pravidla"
+                               style="padding-left: 4px; padding-right: 4px;">Pravidla hry</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/ateam">Admin Team</a>
+                            <a class="nav-link" href="/ateam" style="padding-left: 4px; padding-right: 4px;">Admin
+                                Team</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/galerie">Galerie</a>
+                            <a class="nav-link" href="/galerie" style="padding-left: 4px; padding-right: 4px;">
+                                Galerie</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/kontakt">Kontakt</a>
+                            <a class="nav-link" href="/kontakt" style="padding-left: 4px; padding-right: 4px;">
+                                Kontakt</a>
                         </li>
                         {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <span style="font-size: 1.4em; font-weight: bold;"> | </span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/uredni-deska">Úřední deska</a>
+                                <a class="nav-link" href="/uredni-deska"
+                                   style="padding-left: 4px; padding-right: 4px;">Úřední deska</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/internet">Internet</a>
+                                <a class="nav-link" href="/internet" style="padding-left: 4px; padding-right: 4px;">
+                                    Internet</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/instablox">InstaBlox</a>
+                                <a class="nav-link" href="/instablox" style="padding-left: 4px; padding-right: 4px;">
+                                    InstaBlox</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/blox-news">BloxNews</a>
+                                <a class="nav-link" href="/blox-news" style="padding-left: 4px; padding-right: 4px;">
+                                    BloxNews</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/bazos">Bazoš</a>
+                                <a class="nav-link" href="/bazos" style="padding-left: 4px; padding-right: 4px;">
+                                    Bazoš</a>
                             </li>
                         {% endif %}
                     </ul>
@@ -97,29 +108,49 @@
                     <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/profil">Profil</a>
+                            <a class="nav-link" href="/profil" style="padding-left: 4px; padding-right: 4px;">Profil
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/odhlaseni">Odhlášení</a>
+                            <a class="nav-link" href="/odhlaseni" style="padding-left: 4px; padding-right: 4px;">
+                                Odhlášení</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/registrace">Registrace</a>
+                            <a class="nav-link" href="/registrace" style="padding-left: 4px; padding-right: 4px;">
+                                Registrace</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/prihlaseni">Přihlášení</a>
+                            <a class="nav-link" href="/prihlaseni" style="padding-left: 4px; padding-right: 4px;">
+                                Přihlášení</a>
                         </li>
                     {% endif %}
                     </ul>
                 </div>
             </nav>
+            <br><br>
         </header>
+        <br>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="alert {{ message.tags }} alert-dismissible col-lg-6" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Zavřít">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
 
         <main>
-            <br><br>
+            <br>
             <div class="content container">
+                {% if user.is_authenticated %}
                 <div class="row">
-                    {% if user.is_authenticated %}
                     <div class="col-md-8">
                     {% endif %}
                         {% block content %}
@@ -128,23 +159,39 @@
                     </div>
                     <div class="col-md-1"> </div>
                     <div class="col-md-3">
-                        <div style="background-image: linear-gradient(#FFEBCC, #FFAD33); border: 1.5px solid #FF9900;
+                        <!--
+                        <div style="background-image: linear-gradient(#6fdc6f, #196719); border: 2px solid #0F3D0F;
                          border-radius: 3px; padding: 10px;">
-                            <h4 style="font-weight: bold; color: black;">Tvé postavy:</h4>
-                            <ul>
-                                {% for postava in postavy %}
-                                    {% if postava.majitel.id == user.id %}
-                                        <li>{{ postava.cele_jmeno }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                            <div class="alert alert-danger text-center" style="font-weight: bold;">
+                         -->
+                        <div class="card mb-3"
+                             style="border: 3px solid #0F3D0F;
+                         border-radius: 5px;">
+                            <div class="card-header"
+                                 style="font-weight: bold; background-color: #42A93D; text-decoration: underline;
+                                 font-size: 1.3em;">
+                                Tvé postavy:
+                            </div>
+                            <div class="card-body"
+                                 style="background-image: linear-gradient(#6FDC6F, #2DB92D);
+                                 padding-left: 0px; padding-right: 0px; padding-bottom: 0px;">
+                                <ul>
+                                    {% for postava in postavy %}
+                                        {% if postava.majitel.id == user.id %}
+                                            <li>{{ postava.cele_jmeno }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <div class="card card-header text-center"
+                                 style="font-weight: bold; margin: 7px; background-color: #FCDED1;
+                                 border: 2px solid #991F00;">
                                 Nemůžeš mít více než 3 postavy!
                             </div>
+                            </div>
+
                         </div>
                     </div>
-                    {% endif %}
                 </div>
+                {% endif %}
             </div>
         </main>
         <br>
@@ -217,4 +264,5 @@
          format:'d.m.Y'
         });
     </script>
+    <script src="../../../../static/lightbox/lightbox2-2.11.3/dist/js/lightbox-plus-jquery.js"></script>
 </html>

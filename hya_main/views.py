@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .forms import ClanekForm, RegistraceForm, PrihlaseniForm, PostavaForm, PageForm, PageDeleteForm, PageUpdateForm
 from .models import Clanek, Postava, Page
+import os
 
 
 # Create your views here.
 def clanek_list(request):
-    clanky = Clanek.objects.filter(publikovano__lte=timezone.now()).order_by('-publikovano')
+    clanky = Clanek.objects.filter(vytvoreno__lte=timezone.now()).order_by('-vytvoreno')
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/clanek_list.html', {'clanky': clanky, 'postavy': postavy})
 
@@ -23,20 +25,23 @@ def clanek_new(request):
     postavy = Postava.objects.order_by('prijmeni')
     IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
     if request.method == "POST":
-        form = ClanekForm(request, request.POST)
-        # form = ClanekForm(request, request.POST, request.FILES)
+        form = ClanekForm(request, request.POST, request.FILES)
+        pic = request.FILES or None
         if form.is_valid:
             clanek = form.save()
-            clanek.obrazek = None
-            # clanek.obrazek = request.FILES['obrazek']
-            # file_type = clanek.obrazek.url.split('.')[-1]
-            # file_type = file_type.lower()
-            # if file_type not in IMAGE_FILE_TYPES:
-                # print("Wrong type:", file_type)
+            clanek.obrazek = pic
+            if pic:
+                file_type = clanek.obrazek.url.split('.')[-1]
+                file_type = file_type.lower()
+                if file_type not in IMAGE_FILE_TYPES:
+                    print("Wrong type:", file_type)
             clanek.autor = request.user
-            clanek.publikovano = timezone.now()
+            clanek.vytvoreno = timezone.now()
             clanek.save()
+            messages.success(request, 'Článek úspěšně vytvořen..')
             return redirect('clanek_detail', pk=clanek.pk)
+        else:
+            messages.error(request, 'Chyba při vytváření článku..')
     else:
         form = ClanekForm()
     return render(request, 'hya_main/clanek_edit.html', {'form': form, 'postavy': postavy})
@@ -49,35 +54,35 @@ def clanek_delete(request, pk):
 
 @login_required
 def bazos(request):
-    clanky = Clanek.objects.filter(publikovano__lte=timezone.now()).order_by('-publikovano')
+    clanky = Clanek.objects.filter(vytvoreno__lte=timezone.now()).order_by('-vytvoreno')
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/bazos_list.html', {'clanky': clanky, 'postavy': postavy})
 
 
 @login_required
 def internet(request):
-    clanky = Clanek.objects.filter(publikovano__lte=timezone.now()).order_by('-publikovano')
+    clanky = Clanek.objects.filter(vytvoreno__lte=timezone.now()).order_by('-vytvoreno')
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/internet_list.html', {'clanky': clanky, 'postavy': postavy})
 
 
 @login_required
 def instablox(request):
-    clanky = Clanek.objects.filter(publikovano__lte=timezone.now()).order_by('-publikovano')
+    clanky = Clanek.objects.filter(vytvoreno__lte=timezone.now()).order_by('-vytvoreno')
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/instablox_list.html', {'clanky': clanky, 'postavy': postavy})
 
 
 @login_required
 def bloxnews(request):
-    clanky = Clanek.objects.filter(publikovano__lte=timezone.now()).order_by('-publikovano')
+    clanky = Clanek.objects.filter(vytvoreno__lte=timezone.now()).order_by('-vytvoreno')
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/blox_list.html', {'clanky': clanky, 'postavy': postavy})
 
 
 @login_required
 def uredka(request):
-    clanky = Clanek.objects.filter(publikovano__lte=timezone.now()).order_by('-publikovano')
+    clanky = Clanek.objects.filter(vytvoreno__lte=timezone.now()).order_by('-vytvoreno')
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/uredka_list.html', {'clanky': clanky, 'postavy': postavy})
 
@@ -92,6 +97,7 @@ def ateam(request):
     return render(request, 'hya_main/ateam.html', {'postavy': postavy})
 
 
+# TODO: Fix jQuery
 def galerie(request):
     postavy = Postava.objects.order_by('prijmeni')
     return render(request, 'hya_main/galerie.html', {'postavy': postavy})
@@ -121,8 +127,14 @@ def registr(request):
             osoba = form.save()
             uziv = authenticate(username=name, password=passw)
             osoba.save()
-            login(request, uziv)
+            try:
+                login(request, uziv)
+            except AttributeError:
+                messages.error(request, 'Chyba při přihlašování u registrace..')
+                return redirect('/registrace')
             return redirect('/')
+        else:
+            messages.error(request, 'Chyba při registraci..')
     else:
         form = RegistraceForm()
     return render(request, 'hya_main/signup_screen.html', {'form': form})
@@ -135,8 +147,14 @@ def prihlas(request):
         passw = request.POST.get('password')
         if form.is_valid:
             osoba = authenticate(username=name, password=passw)
-            login(request, osoba)
+            try:
+                login(request, osoba)
+            except AttributeError:
+                messages.error(request, 'Chyba přihlášení..')
+                return redirect('/prihlaseni')
             return redirect('/')
+        else:
+            messages.error(request, 'Chyba při přihlášení..')
     else:
         form = PrihlaseniForm()
     return render(request, 'hya_main/login_screen.html', {'form': form})
@@ -157,7 +175,10 @@ def postava_new(request):
             postava.vytvoreno = timezone.now()
             postava.cele_jmeno = postava.full_jmeno()
             postava.save()
+            messages.success(request, 'Postava úspěšně vytvořena..')
             return redirect('postava_detail', pk=postava.pk)
+        else:
+            messages.error(request, 'Chyba při vytváření postavy..')
     else:
         form = PostavaForm()
     return render(request, 'hya_main/postava_new.html', {'form': form, 'postavy': postavy})
@@ -189,7 +210,10 @@ def page_new(request):
             page.created_date = timezone.now()
             page.urltitle = page.urlify()
             page.save()
+            messages.success(request, 'Stránka úspěšně vytvořena..')
             return redirect('page_detail', urltitle=page.urltitle)
+        else:
+            messages.error(request, 'Chyba při vytváření stránky..')
     else:
         form = PageForm()
     return render(request, 'hya_main/page_new.html', {'form': form})
@@ -225,4 +249,8 @@ def page_delete(request, urltitle):
     else:
         form = PageForm()
     return render(request, 'hya_main/page_delete.html', {'form': form, "page": page})
+
+def chat(request):
+    postavy = Postava.objects.order_by('prijmeni')
+    return render(request, 'hya_main/chat.html', {'postavy': postavy})
 

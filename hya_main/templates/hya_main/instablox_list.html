@@ -12,8 +12,8 @@
     {% for clanek in clanky %}
         {% if clanek.kategorie == 3 %}
             <a href="/clanek/{{clanek.id}}">
-                <div class="panel panel-warning" style="color: #E68A00;">
-                    <div class="panel-heading">
+                <div class="card bg-light" style="color: #E68A00; margin-bottom: 15px; border: 3px solid #FFDA44">
+                    <div class="card-header" style="background-color: #F8FF95;">
                         {% if clanek.postava %}
                             {{ clanek.postava.cele_jmeno }}
                         {% else %}
@@ -21,15 +21,21 @@
                         {% endif %}
                         přidává příspěvek:
                     </div>
-                    <div class="panel-body">
-                        <h4>{{ clanek.titulek }}</h4>
-                        <p>{{ clanek.obsah|linebreaksbr }}</p>
-                        {% if clanek.obrazek %}
-                            {{ clanek.obrazek }}
-                        {% endif %}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <p>{{ clanek.obsah|linebreaksbr }}</p>
+                            </div>
+                            {% if clanek.obrazek is not None %}
+                            <div class="col-sm-4 text-right">
+                                <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.obrazek.url }}" height="150px"
+                                     style="border: 3px solid #F0C000; border-radius: 3px; padding: 2px;">
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <small>{{ clanek.publikovano }}, {{ clanek.autor }}</small>
+                    <div class="card-footer text-muted">
+                        <small>{{ clanek.vytvoreno }}, autor: {{ clanek.autor }}</small>
                     </div>
                 </div>
             </a>

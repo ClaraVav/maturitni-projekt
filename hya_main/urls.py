@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'^new/$', views.page_new, name="page_new"),
     url(r'^edit/(?P<urltitle>[\w\+%_& ]+)/$', views.page_edit, name="page_edit"),
     url(r'^delete/(?P<urltitle>[\w\+%_& ]+)/$', views.page_delete, name="page_delete"),
+
+    url(r'^chat/$', views.chat, name="chat"),
 ]

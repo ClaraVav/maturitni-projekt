@@ -1,21 +1,24 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-    <style>h2 { color: #FF9900; }</style>
-    <form class="col-sm-6 col-offset-6 post-form text-center" method="POST">
-        <br>
-        <h2>Registrace</h2>
-        {% csrf_token %}
-        <br><br><br>
-            <input id="jmeno" type="text" class="form-control" name="username"
-            placeholder="Přihlašovací jméno">
-        <br>
-            <input id="heslo" type="password" class="form-control" name="password1"
-            placeholder="Heslo">
-        <br>
-            <input id="heslo_2" type="password" class="form-control" name="password2"
-            placeholder="Heslo znovu">
-        <br><br>
-            <button type="submit" class="save btn btn-outline-primary">Založit účet</button>
-    </form>
+    <style>h2 { color: #FF9900; text-decoration: underline; font-weight: bold; }</style>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <form class="col-sm-6 post-form text-center" method="POST">
+            <br>
+            <h2>Registrace</h2>
+            {% csrf_token %}
+            <br><br><br>
+                <input id="jmeno" type="text" class="form-control" name="username"
+                placeholder="Přihlašovací jméno">
+            <br>
+                <input id="heslo" type="password" class="form-control" name="password1"
+                placeholder="Heslo">
+            <br>
+                <input id="heslo_2" type="password" class="form-control" name="password2"
+                placeholder="Heslo znovu">
+            <br><br>
+                <button type="submit" class="save btn btn-outline-primary">Založit účet</button>
+        </form>
+    </div>
 {% endblock %}
