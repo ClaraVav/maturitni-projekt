@@ -65,7 +65,7 @@ class Clanek(models.Model):
 
 class Postava(models.Model):
     majitel = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
-    vytvoreno = models.DateTimeField(blank=True, null=True)
+    vytvoreno = models.DateTimeField(blank=True, null=True, verbose_name="Vytvořeno")
     jmeno = models.CharField(max_length=30, null=True, verbose_name="Křestní jméno")
     prijmeni = models.CharField(max_length=50, null=True, verbose_name="Příjmení")
     narozeni = models.DateField(null=True, verbose_name="Datum narození")
@@ -91,3 +91,22 @@ class Postava(models.Model):
         self.cele_jmeno = self.jmeno + " " + self.prijmeni
         self.save()
         return self.cele_jmeno
+
+
+class Zprava(models.Model):
+    tvurce = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    odesilatel = models.ForeignKey('hya_main.Postava', on_delete=models.CASCADE, verbose_name="Odesílatel",
+                                   related_name="odesilatel")
+    prijemce = models.ForeignKey('hya_main.Postava', on_delete=models.CASCADE, verbose_name="Příjemce",
+                                 related_name="prijemce")
+    predmet = models.CharField(max_length=50, null=True, verbose_name="Předmět")
+    obsah = models.TextField(null=True, verbose_name="Obsah")
+    odeslano = models.DateTimeField(null=True, blank=True)
+    precteno = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Zpravy'
+
+    def send(self):
+        self.odeslano = timezone.now()
+        self.save()

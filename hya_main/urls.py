@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^delete/(?P<urltitle>[\w\+%_& ]+)/$', views.page_delete, name="page_delete"),
 
     url(r'^chat/$', views.chat, name="chat"),
+    url(r'^nova/zprava', views.zprava_new, name="nova-zprava"),
 ]

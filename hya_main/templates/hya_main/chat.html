@@ -1,5 +1,46 @@
 {% extends 'hya_main/main.html' %}
 
-{% blockcontent %}
-<h1>it works!</h1>
+{% block content %}
+<h2>Zprávy</h2>
+<div style="overflow:scroll;">
+    <table>
+        <tr><th class="thead-light col-md-3">Přijaté zprávy:</th>
+            <td rowspan="5" style="padding:15px; vertical-align:top;">
+                <h3>Předmět</h3>
+                <small>Pro koho</small><br>
+                <small>Od koho - kdy</small>
+                <hr>
+                Content
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:lightgray; padding:7px;">
+                <h5 style="font-weight:bold;">Předmět</h5>
+                <small>Pro koho</small><br>
+                od koho - kdy
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:white; padding: 7px;">
+                <h5 style="font-weight:bold;">Předmět</h5>
+                <small>Pro koho</small><br>
+                od koho - kdy
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color:lightgray; padding: 7px;">
+                <h5 style="font-weight:bold;">Předmět</h5>
+                <small>Pro koho</small><br>
+                od koho - kdy
+            </td>
+        </tr>
+        {% for zprava in zpravy %}
+            <tr>
+                <td>{{ zprava.predmet }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+<a href="/nova-zprava"><button class="btn btn-outline-success">Nová zpráva</button></a>
 {% endblock %}

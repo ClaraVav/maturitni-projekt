@@ -1,7 +1,7 @@
 from django import forms
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
-from .models import Clanek, Postava, Page
+from .models import Clanek, Postava, Page, Zprava
 from django.forms import DateTimeInput
 
 
@@ -44,6 +44,12 @@ class PageUpdateForm(UpdateView):
 class PageDeleteForm(UpdateView):
     class Meta:
         model = Page
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Zprava
+        fields = ('odesilatel', 'prijemce', 'predmet', 'obsah')
 
 
 # class DeleteThing(DeleteView):

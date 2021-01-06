@@ -3,9 +3,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from .forms import ClanekForm, RegistraceForm, PrihlaseniForm, PostavaForm, PageForm, PageDeleteForm, PageUpdateForm
-from .models import Clanek, Postava, Page
-import os
+from .forms import ClanekForm, RegistraceForm, PrihlaseniForm, PostavaForm, PageForm, PageDeleteForm, PageUpdateForm,\
+    MessageForm
+from .models import Clanek, Postava, Page, Zprava
 
 
 # Create your views here.
@@ -248,9 +248,28 @@ def page_delete(request, urltitle):
             return redirect('/')
     else:
         form = PageForm()
-    return render(request, 'hya_main/page_delete.html', {'form': form, "page": page})
+    return render(request, 'hya_main/page_delete.html', {'form': form, 'page': page})
+
 
 def chat(request):
     postavy = Postava.objects.order_by('prijmeni')
-    return render(request, 'hya_main/chat.html', {'postavy': postavy})
+    zpravy = Zprava.objects.order_by('odeslano')
+    return render(request, 'hya_main/chat.html', {'postavy': postavy, 'zpravy': zpravy})
+
+
+def zprava_new(request):
+    postavy = Postava.objects.order_by('prijmeni')
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid:
+            msg = form.save(commit=False)
+            msg.tvurce = request.user
+            msg.odeslano = timezone.now()
+            msg.save()
+            messages.success(request, 'Zpráva úspěšně odeslána..')
+        else:
+            messages.error(request, 'Chyba při odesílání zprávy..')
+    else:
+        form = MessageForm()
+    return render(request, 'hya_main/chat.html', {'postavy': postavy, 'form': form})
 
