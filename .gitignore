@@ -2,3 +2,4 @@ venv/
 .idea/
 node_modules/
 hya_main/__pycache__
+todo.py

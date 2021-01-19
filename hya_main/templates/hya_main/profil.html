@@ -8,6 +8,10 @@
     </ul>
     <br>
     <a href="/chat"><button type="submit" class="btn btn-success">Chat</button></a>
+    {% if user.is_staff %}
+    <br><br>
+    <a href="/admin"><button type="submit" class="btn btn-outline-warning">Administrace</button></a>
+    {% endif %}
     <br>
     <hr class="dashed">
     <br>

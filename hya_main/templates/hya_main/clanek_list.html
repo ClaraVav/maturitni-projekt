@@ -1,44 +1,49 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-    <style>a div div p { font-size: large; }</style>
-    <h2 style="font-weight: bold;">Všechny příspěvky:</h2>
-    <br>
-    {% for clanek in clanky %}
-        <a href="/clanek/{{clanek.id}}">
-            <div class="card bg-light" style="color: #E68A00; margin-bottom: 15px; border: 3px solid #FFDA44">
-                <div class="card-header" style="background-color: #F8FF95;">
-                    {% if clanek.kategorie == 1 %}
-                        <p>Nový inzerát na Bazoši</p>
-                    {% elif clanek.kategorie == 2 %}
-                        <p>Nová zpráva od BloxNews</p>
-                    {% elif clanek.kategorie == 3 %}
-                        <p>Nový příspěvek na InstaBloxu</p>
-                    {% elif clanek.kategorie == 4 %}
-                        <p>Nový příspěvek na Internetu</p>
-                    {% elif clanek.kategorie == 5 %}
-                        <p>Nová zpráva od MÚ</p>
-                    {% endif %}
-                    <h3>{{ clanek.titulek }}</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <p>{{ clanek.obsah|linebreaksbr }}</p>
-                        </div>
-                        {% if clanek.obrazek is not None %}
-                        <div class="col-sm-4 text-right">
-                            <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.obrazek.url }}" height="150px"
-                                 style="border: 3px solid #F0C000; border-radius: 3px; padding: 2px;
-                                  background-color: #F8FF95;">
-                        </div>
-                        {% endif %}
+<style>
+    a div div p { font-size: large; }
+    h1 { font-weight: bold; }
+</style>
+<h1>Vítejte!</h1>
+
+<h2 style="font-weight: bold;">Všechny příspěvky:</h2>
+<br>
+{% for clanek in clanky %}
+    <a href="/clanek/{{clanek.slug}}">
+        <div class="card bg-light" style="color: #E68A00; margin-bottom: 15px; border: 3px solid #FFDA44">
+            <div class="card-header" style="background-color: #F8FF95;">
+                {% if clanek.kategorie == 1 %}
+                    <p>Nový inzerát na Bazoši</p>
+                {% elif clanek.kategorie == 2 %}
+                    <p>Nová zpráva od BloxNews</p>
+                {% elif clanek.kategorie == 3 %}
+                    <p>Nový příspěvek na InstaBloxu</p>
+                {% elif clanek.kategorie == 4 %}
+                    <p>Nový příspěvek na Internetu</p>
+                {% elif clanek.kategorie == 5 %}
+                    <p>Nová zpráva od MÚ</p>
+                {% endif %}
+                <h3>{{ clanek.titulek }}</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p>{{ clanek.obsah|linebreaksbr|truncatewords:35 }}</p>
                     </div>
-                </div>
-                <div class="card-footer text-muted">
-                    <small>{{ clanek.vytvoreno }}, autor: {{ clanek.autor }}</small>
+                    {% if clanek.obrazek is not None %}
+                    <div class="col-sm-4 text-right">
+                        <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.obrazek.url }}" height="150px"
+                             style="border: 3px solid #F0C000; border-radius: 3px; padding: 2px;
+                              background-color: #F8FF95;">
+                    </div>
+                    {% endif %}
                 </div>
             </div>
-        </a>
-    {% endfor %}
+            <div class="card-footer text-muted">
+                <small>{{ clanek.vytvoreno }}, autor: {{ clanek.autor }}</small>
+            </div>
+        </div>
+    </a>
+{% endfor %}
 {% endblock %}

@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <p>{{ clanek.obsah|linebreaksbr }}</p>
+                                <p>{{ clanek.obsah|linebreaksbr|truncatewords:35 }}</p>
                             </div>
                             {% if clanek.obrazek is not None %}
                             <div class="col-sm-4 text-right">

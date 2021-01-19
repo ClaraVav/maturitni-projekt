@@ -4,7 +4,7 @@
     <style>div.clanek p { font-size: large; }</style>
     <div class="clanek">
         <h3 style="font-weight: bold; color: black;">{{ clanek.titulek }}</h3>
-        <small>Autor: {{ clanek.autor }} / {{ clanek.postava.cele_jmeno }}</small><br>
+        <small>Autor: {{ clanek.postava.cele_jmeno }}</small><br>
         {% if clanek.publikovano %}
             <small>Publikováno: {{ clanek.publikovano }}</small>
         {% endif %}
@@ -14,7 +14,10 @@
             <p>{{ clanek.postava.cele_jmeno }} pro BloxNews</p>
         {% endif %}
         {% if clanek.obrazek %}
-            <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.img }}">
+            <a data-fancybox="{{ clanek.obrazek.name }}" href="{{ clanek.obrazek.url }}">
+                <img src="{{ clanek.obrazek.url }}" alt="{{ clanek.img }}"
+                 style="border: 3px solid #F0C000; border-radius: 3px; padding: 2px; background-color: #F8FF95;">
+            </a>
         {% endif %}
         <hr>
         {% if clanek.autor == user.username or user.is_staff %}

@@ -4,7 +4,7 @@
     <style>a div div p { font-size: large; }</style>
     <h3>
         {% if user.is_authenticated %}
-            <a href="{% url 'clanek_edit' %}" class="top-menu">
+            <a href="/clanek/new" class="top-menu">
                 Přidat článek <span class="glyphicon glyphicon-plus"></span>
             </a>
         {% endif %}
@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <p>{{ clanek.obsah|linebreaksbr }}</p>
+                                <p>{{ clanek.obsah|linebreaksbr|truncatewords:35 }}</p>
                             </div>
                             {% if clanek.obrazek is not None %}
                             <div class="col-sm-4 text-right">
@@ -29,9 +29,8 @@
                             {% endif %}
                         </div>
                     </div>
-                </div>
                     <div class="card-footer text-muted">
-                        <small>{{ clanek.publikovano }}, by {{ clanek.autor }}</small>
+                        <small>{{ clanek.vytvoreno }}, by {{ clanek.autor }}</small>
                     </div>
                 </div>
             </a>

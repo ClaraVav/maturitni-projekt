@@ -1,40 +1,70 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-    <h3 class="text-center">Nová postava</h3><br>
+    <h2 class="text-center nadpis">Nová postava</h2><br>
     <form method="POST" class="post-form">
          {% csrf_token %}
 
-        <input id="jmeno" type="text" class="form-control" name="jmeno"
-            placeholder="Křestní jméno">
+        <div class="row">
+            <div class="col-md-6">
+                Křestní jméno
+                <input id="jmeno" type="text" class="form-control" name="jmeno"
+                    placeholder="Křestní jméno">
+            </div>
+            <div class="col-md-6">
+                Příjmení
+                <input id="prijmeni" type="text" class="form-control" name="prijmeni"
+                    placeholder="Příjmení">
+            </div>
+        </div>
         <br>
-        <input id="prijmeni" type="text" class="form-control" name="prijmeni"
-            placeholder="Příjmení">
-        <br>
-        <input id="narozeni" type="date" class="form-control" name="narozeni"
-            placeholder="Datum narození" value="2011-08-19">
-        <br>
-        <input id="narodnost" type="text" class="form-control" name="narodnost"
+        <div class="row">
+            <div class="col-md-4">
+                Datum narození
+                <input id="narozeni" type="date" class="form-control" name="narozeni"
+            placeholder="Datum narození">
+            </div>
+            <div class="col-md-5">
+                Národnost
+                <input id="narodnost" type="text" class="form-control" name="narodnost"
             placeholder="Národnost">
-        <br>
-        <input id="vyska" type="number" class="form-control" name="vyska"
+            </div>
+            <div class="col-md-3">
+                Výška
+                <input id="vyska" type="number" class="form-control" name="vyska"
             placeholder="Výška v cm">
+            </div>
+        </div>
         <br>
-        <input id="vyznani" type="text" class="form-control" name="nabozenstvi"
+        <div class="row">
+            <div class="col-md-6">
+                Vyznání
+                <input id="vyznani" type="text" class="form-control" name="nabozenstvi"
             placeholder="Vyznání">
-        <br>
-        <input id="politika" type="text" class="form-control" name="politika"
+            </div>
+            <div class="col-md-6">
+                Politická orientace
+                <input id="politika" type="text" class="form-control" name="politika"
             placeholder="Politická orientace">
+            </div>
+        </div>
         <br>
+        Dosažené vzdělání
         <input id="vzdelani" type="text" class="form-control" name="vzdelani"
             placeholder="Vzdělání">
         <br>
+        Jazyky, které postava ovládá
+        <input id="jazyky" type="text" class="form-control" name="jazyky" placeholder="Jazyky">
+        <br>
+        Rodiče postavy
         <input id="rodice" type="text" class="form-control" name="rodice"
             placeholder="Rodiče">
         <br>
+        Zájmy a koníčky
         <input id="hobbies" type="text" class="form-control" name="hobby"
             placeholder="Koníčky">
         <br>
+        Životopis
         <textarea id="bio" class="form-control" name="bio" placeholder="Něco o životě"></textarea>
         <br><br>
         <div class="text-center">

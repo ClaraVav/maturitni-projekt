@@ -137,12 +137,3 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("redis-server-name", 6379)],
-        },
-        "ROUTING": "project_hya.routing.channel_routing",
-    },
-}

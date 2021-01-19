@@ -1,7 +1,7 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-    <h1>Nový článek</h1>
+    <h2 class="nadpis">Nový článek</h2>
     <form method="POST" class="post-form">
         {% csrf_token %}
         <br><br>
@@ -20,8 +20,8 @@
         <br>
             Kategorie:
             <select class="form-control" id="kategorie" name="kategorie">
-                <option value="1">Bazoš</option>
-                <option value="2">BloxNews</option>
+                <option value="1">Inzerát</option>
+                <option value="2">Novinka</option>
                 <option value="3">InstaBlox</option>
                 <option value="4">Internet</option>
                 <option value="5">Úřední deska</option>

@@ -1,45 +1,49 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-<h2>Zprávy</h2>
-<div style="overflow:scroll;">
-    <table>
-        <tr><th class="thead-light col-md-3">Přijaté zprávy:</th>
-            <td rowspan="5" style="padding:15px; vertical-align:top;">
-                <h3>Předmět</h3>
-                <small>Pro koho</small><br>
-                <small>Od koho - kdy</small>
-                <hr>
-                Content
-            </td>
-        </tr>
-        <tr>
-            <td style="background-color:lightgray; padding:7px;">
-                <h5 style="font-weight:bold;">Předmět</h5>
-                <small>Pro koho</small><br>
-                od koho - kdy
-            </td>
-        </tr>
-        <tr>
-            <td style="background-color:white; padding: 7px;">
-                <h5 style="font-weight:bold;">Předmět</h5>
-                <small>Pro koho</small><br>
-                od koho - kdy
-            </td>
-        </tr>
-        <tr>
-            <td style="background-color:lightgray; padding: 7px;">
-                <h5 style="font-weight:bold;">Předmět</h5>
-                <small>Pro koho</small><br>
-                od koho - kdy
-            </td>
-        </tr>
-        {% for zprava in zpravy %}
-            <tr>
-                <td>{{ zprava.predmet }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+<style>
+    .prijate { border-right: 3px solid lightgray; padding: 5px; }
+    .jedna-zprava { padding: 5px; padding-left: 10px; }
+    .zpravy-all { overflow: auto; }
+</style>
+<h2 class="nadpis">Zprávy</h2>
+<br>
+<div style="overflow:auto;" class="row">
+    <style>
+        a.zprava:link {color:#333; font-weight:normal;}
+        a.zprava:hover {color:#0D0D0D; font-weight:normal;}
+        a.zprava:visited {color:#333; font-weight:normal;}
+    </style>
+    <div class="prijate col-md-4">
+        <h5 style="font-weight:bold; border-bottom: 3px solid lightgray; padding-bottom:5px;">Přijaté zprávy:</h5>
+        <div class="zpravy-all">
+            {% for zprava in zpravy %}
+                {% if zprava.prijemce.majitel.id == user.id %}
+                <a href="/chat/{{ zprava.id }}" class="zprava">
+                    <!--
+                    {% if zprava.neprectene == true %}
+                        <style>.zprava,h5,small {font-weight: bold;}</style>
+                    {% endif %}
+                    -->
+                    <div class="zprava">
+                        <h5>{{ zprava.predmet }}</h5>
+                        <small>
+                            Pro: {{ zprava.prijemce.cele_jmeno }}<br>
+                            Od: {{ zprava.odesilatel.cele_jmeno }}
+                        </small>
+                        <br>
+                        - {{ zprava.odeslano.date }}
+                        <hr>
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="jedna-zprava col-md-8">
+        {% block zprava %}
+        {% endblock %}
+    </div>
 </div>
 <br>
 <a href="/nova-zprava"><button class="btn btn-outline-success">Nová zpráva</button></a>

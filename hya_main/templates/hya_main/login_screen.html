@@ -1,12 +1,11 @@
 {% extends 'hya_main/main.html' %}
 
 {% block content %}
-    <style>h2 { color: #FF9900; text-decoration: underline; font-weight: bold; }</style>
     <div class="row">
         <div class="col-sm-3"></div>
         <form class="col-sm-6 post-form text-center" method="POST">
             <br>
-            <h2>Přihlášení</h2>
+            <h2 class="nadpis">Přihlášení</h2>
             {% csrf_token %}
             <br><br><br>
                 <div class="input-group">
@@ -30,4 +29,5 @@
             <button type="submit" class="save btn btn-outline-primary">Přihlásit se</button>
         </form>
     </div>
+<br><br><br><br>
 {% endblock %}

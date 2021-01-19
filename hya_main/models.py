@@ -7,13 +7,13 @@ from .customfields import TagField
 
 
 class Page(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=50)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=False)
+    title = models.CharField(max_length=50, primary_key=True)
     urltitle = models.CharField(max_length=50, null=True)
     tags = TagField()
     created_date = models.DateTimeField(default=timezone.now)
     edited_date = models.DateTimeField(default=timezone.now, null=True)
-    content = models.TextField(null=True)
+    content = models.TextField(null=False)
     deleted = models.BooleanField(default=False)
 
     def publish(self):
@@ -35,20 +35,20 @@ class Page(models.Model):
 
 class Clanek(models.Model):
     KATEGORIE = (
-        (1, 'Bazoš'),
-        (2, 'BloxNews'),
+        (1, 'Inzeráty'),
+        (2, 'Noviny'),
         (3, 'InstaBlox'),
         (4, 'Internet'),
         (5, 'Úřední deska'),
     )
 
-    autor = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
+    autor = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=False)
     postava = models.ForeignKey('hya_main.Postava', on_delete=models.CASCADE, null=True,
                                 verbose_name="Postava jako autor")
-    titulek = models.CharField(max_length=100)
+    titulek = models.CharField(max_length=100, primary_key=True)
+    slug = models.SlugField()
     obsah = models.TextField()
     vytvoreno = models.DateTimeField(default=timezone.now)
-    publikovano = models.DateTimeField(blank=True, null=True)
     kategorie = models.IntegerField(default=1, choices=KATEGORIE)
     obrazek = models.FileField(upload_to='obrazky/', null=True)
 
@@ -64,11 +64,11 @@ class Clanek(models.Model):
 
 
 class Postava(models.Model):
-    majitel = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
-    vytvoreno = models.DateTimeField(blank=True, null=True, verbose_name="Vytvořeno")
-    jmeno = models.CharField(max_length=30, null=True, verbose_name="Křestní jméno")
-    prijmeni = models.CharField(max_length=50, null=True, verbose_name="Příjmení")
-    narozeni = models.DateField(null=True, verbose_name="Datum narození")
+    majitel = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=False)
+    vytvoreno = models.DateTimeField(blank=False, null=True, verbose_name="Vytvořeno")
+    jmeno = models.CharField(max_length=30, null=False, verbose_name="Křestní jméno")
+    prijmeni = models.CharField(max_length=50, null=False, verbose_name="Příjmení")
+    narozeni = models.DateField(null=False, verbose_name="Datum narození")
     narodnost = models.CharField(max_length=20, default='Česká', verbose_name="Národnost")
     vyska = models.IntegerField(default=180, null=True, verbose_name="Výška")
     nabozenstvi = models.CharField(max_length=20, null=True, verbose_name="Vyznání")
@@ -77,8 +77,8 @@ class Postava(models.Model):
     rodice = models.CharField(max_length=70, null=True, verbose_name="Rodiče")
     jazyky = models.CharField(max_length=70, null=True, verbose_name="Jazyky")
     hobby = models.CharField(max_length=50, null=True, verbose_name="Koníčky")
-    bio = models.TextField(null=True, verbose_name="Životopis")
-    cele_jmeno = models.CharField(max_length=81, null=True)
+    bio = models.TextField(null=False, verbose_name="Životopis")
+    cele_jmeno = models.CharField(max_length=81)
 
     class Meta:
         verbose_name_plural = 'Postavy'
@@ -94,14 +94,15 @@ class Postava(models.Model):
 
 
 class Zprava(models.Model):
+    id = models.AutoField(primary_key=True, verbose_name="ID")
     tvurce = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     odesilatel = models.ForeignKey('hya_main.Postava', on_delete=models.CASCADE, verbose_name="Odesílatel",
                                    related_name="odesilatel")
     prijemce = models.ForeignKey('hya_main.Postava', on_delete=models.CASCADE, verbose_name="Příjemce",
                                  related_name="prijemce")
-    predmet = models.CharField(max_length=50, null=True, verbose_name="Předmět")
-    obsah = models.TextField(null=True, verbose_name="Obsah")
-    odeslano = models.DateTimeField(null=True, blank=True)
+    predmet = models.CharField(max_length=50, null=False, verbose_name="Předmět")
+    obsah = models.TextField(null=False, verbose_name="Obsah")
+    odeslano = models.DateTimeField(null=False, blank=True, default=timezone.now)
     precteno = models.BooleanField(default=False)
 
     class Meta:

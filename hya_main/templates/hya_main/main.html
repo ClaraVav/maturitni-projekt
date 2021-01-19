@@ -5,30 +5,20 @@
     <head>
         <title>Project Hya</title>
         <meta charset="UTF-8">
-        <!-- {% load bootstrap4 %} -->
-        <!-- {% bootstrap_css %} -->
-        <!-- {% bootstrap_javascript jquery='full' %} -->
-        <!-- {% bootstrap_messages %} -->
+
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
               crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
               crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-        <!-- <script src="{% static 'jquery-2.1.3.min.js' %}"></script> -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
-        <!--<link rel="stylesheet" href="../../../node_modules/lightbox2/dist/css/lightbox.css">-->
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
         <link rel="icon" type="image/png" sizes="32x32" href="../../../media/icons/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../../../media/icons/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
+
         <style>
             a:hover {color: #0f3d0f; text-decoration: none;}
             a {color: #248f24;}
@@ -49,6 +39,7 @@
             label {font-weight: bold; color: #248f24;}
             footer h4 {font-weight: bold; color: white;}
             hr.dashed {border-top: 3px dashed #bbb;}
+            h2.nadpis {color: #FF9900; text-decoration: underline; font-weight: bold; text-align: center;}
         </style>
     </head>
 
@@ -56,8 +47,14 @@
         <header>
             <nav class="navbar navbar-expand-lg fixed-top"
                  style="background-color: #000; padding-bottom: 0px; padding-top: 1px;">
-                <a class="navbar-brand" href="/"><h3 style="font-weight: bold;">HYDRA</h3></a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/"><h3 style="font-weight: bold; padding-right:10px;">HYDRA</h3></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="#navbarNav" aria-expanded="false" aria-label="Zobrazovač nabádky">
+                  ☰
+                </button>
+                <div class="navbar-collapse row" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <span style="font-size: 1.4em; font-weight: bold;"> | </span>
@@ -70,8 +67,7 @@
                                style="padding-left: 4px; padding-right: 4px;">Pravidla hry</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/ateam" style="padding-left: 4px; padding-right: 4px;">Admin
-                                Team</a>
+                            <a class="nav-link" href="/ateam" style="padding-left: 4px; padding-right: 4px;">Náš Tým</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/galerie" style="padding-left: 4px; padding-right: 4px;">
@@ -98,24 +94,24 @@
                                     InstaBlox</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/blox-news" style="padding-left: 4px; padding-right: 4px;">
-                                    BloxNews</a>
+                                <a class="nav-link" href="/noviny" style="padding-left: 4px; padding-right: 4px;">
+                                    Noviny</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/bazos" style="padding-left: 4px; padding-right: 4px;">
-                                    Bazoš</a>
+                                <a class="nav-link" href="/inzeraty" style="padding-left: 4px; padding-right: 4px;">
+                                    Inzeráty</a>
                             </li>
                         {% endif %}
                     </ul>
                 </div>
                 <div class="navbar-nav navbar-right row">
                     <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/profil" style="padding-left: 4px; padding-right: 4px;">Profil
-                            </a>
+                            <a class="nav-link" href="/profil" style="padding-left: 4px; padding-right: 4px;">
+                                Profil ({{ user.username }})</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" style="padding-right:10px;">
                             <a class="nav-link" href="/odhlaseni" style="padding-left: 4px; padding-right: 4px;">
                                 Odhlášení</a>
                         </li>
@@ -124,11 +120,29 @@
                             <a class="nav-link" href="/registrace" style="padding-left: 4px; padding-right: 4px;">
                                 Registrace</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" style="padding-right:10px;">
                             <a class="nav-link" href="/prihlaseni" style="padding-left: 4px; padding-right: 4px;">
                                 Přihlášení</a>
                         </li>
-                    {% endif %}
+                        {% endif %}
+                        <!--
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Účty
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% if user.is_authenticated %}
+                                <a class="dropdown-item" href="/profil">Profil</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/odhlaseni">Odhlášení</a>
+                                {% else %}
+                                <a class="dropdown-item" href="/registrace">Registrace</a>
+                                <a class="dropdown-item" href="/prihlaseni">Přihlášení</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        -->
                     </ul>
                 </div>
             </nav>
@@ -163,13 +177,7 @@
                     </div>
                     <div class="col-md-1"> </div>
                     <div class="col-md-3">
-                        <!--
-                        <div style="background-image: linear-gradient(#6fdc6f, #196719); border: 2px solid #0F3D0F;
-                         border-radius: 3px; padding: 10px;">
-                         -->
-                        <div class="card mb-3"
-                             style="border: 3px solid #0F3D0F;
-                         border-radius: 5px;">
+                        <div class="card mb-3" style="border: 3px solid #0F3D0F; border-radius: 5px;">
                             <div class="card-header"
                                  style="font-weight: bold; background-color: #42A93D; text-decoration: underline;
                                  font-size: 1.3em;">
@@ -189,57 +197,56 @@
                                  style="font-weight: bold; margin: 7px; background-color: #FCDED1;
                                  border: 2px solid #991F00;">
                                 Nemůžeš mít více než 3 postavy!
+                                </div>
                             </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
                 {% endif %}
             </div>
         </main>
-        <br>
+        <br><br><br>
 
         <footer class="container-fluid">
             <div class="row">
                 <div class="col-sm-8">
-                    <p>(popis hry)</p>
+                    <p><strong>Project Hydra</strong></p>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pellentesque eget nunc ut
-                        tempus. In et interdum nibh. Aenean scelerisque ipsum eu viverra fringilla. Praesent in
-                        risus ultrices, rhoncus arcu dapibus, vestibulum ex. Nulla tristique pretium nibh, vel
-                        pulvinar purus condimentum vel. Sed iaculis, sem ut accumsan convallis, enim lacus rhoncus
-                        ligula, ut finibus ante odio vel mauris. Aenean pharetra lorem metus, id cursus libero
-                        blandit a.
-                    </p>
-                    <p>
-                        Suspendisse mattis velit eu elit fringilla posuere. Suspendisse faucibus interdum elit eget
-                        pulvinar. Etiam at ex vehicula sem efficitur porta vel aliquam risus. Fusce id nisi nisl.
-                        Aenean dictum nibh ac risus commodo, non feugiat mauris ullamcorper. Pellentesque sagittis,
-                        turpis non ultricies rhoncus, neque lectus aliquam felis, id tristique leo mauris id ligula.
-                        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-                        Proin magna est, posuere sit amet nunc quis, fermentum consectetur libero.
+                        Jedinečné stránky nabízející rozšíření možností RolePlaye. Funguje jako malý internet v
+                        internetu. Vše, co potřebujete pro IC sféru. Tvorba postav. Přidávání článků, něco jako
+                        Instagram, soukromé zprávy podobné mailu.
                     </p>
                 </div>
                 <div class="col-sm-4" style="padding-left: 100px;">
                     <h4 style="font-weight: bold;">Odkazy:</h4>
-                        <a href="https://discord.gg/unt5tVU" target="_blank">
+                        <a href="#" target="_blank">
                             <i class="fab fa-discord"></i>
-                            Discord <!-- CP -->
+                            Sociální síť 1 <!-- CP -->
                         </a>
                     <br>
-                        <a href="https://www.roblox.com/groups/5163582/CP-Bloxov#!/about" target="_blank">
+                        <a href="#" target="_blank">
                             <i class="fab fa-bitbucket"></i>
-                            Roblox Group <!-- CP || Bloxov -->
+                            Sociální síť 2 <!-- CP || Bloxov -->
                         </a>
                     <br>
-                        <a href="https://www.roblox.com/games/3887336971/BLOXOV-II"
+                        <a href="#"
                         target="_blank">
                             <i class="fab fa-bitbucket"></i>
-                            Odkaz na hru <!-- CP -->
+                            Sociální síť 3 <!-- CP -->
                         </a>
                 </div>
             </div>
         </footer>
     </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 </html>
