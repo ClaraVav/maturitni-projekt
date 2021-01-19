@@ -1,0 +1,45 @@
+{% extends 'hya_main/main.html' %}
+
+{% block content %}
+
+<a href="/chat"><button class="btn btn-danger">Zpět</button></a>
+<h2 class="nadpis">Zprávy</h2>
+<br>
+<form method="POST" class="post-form">
+    <div style="border: 3px solid lightgray; border-radius:5px; padding:5px;">
+        {% csrf_token %}
+        <input id="predmet" type="text" class="form-control" name="predmet" placeholder="Předmět zprávy">
+        <br>
+        <div class="row">
+            <div class="col-md-2">> Odesílatel:</div>
+            <div class="col-md-10">
+                <select class="form-control" id="odesilatel" name="odesilatel">
+                {% for postava in postavy %}
+                    {% if postava.majitel.id == user.id %}
+                        <option value="{{ postava.id }}">{{ postava.cele_jmeno }}</option>
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-2">> Příjemce:</div>
+            <div class="col-md-10">
+                <select class="form-control" id="prijemce" name="prijemce">
+                {% for postava in postavy %}
+                    <option value="{{ postava.id }}">{{ postava.cele_jmeno }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+        <hr>
+        <textarea id="obsah" class="form-control" name="obsah" placeholder="Obsah zprávy"></textarea>
+        <hr>
+        <div class="text-center">
+            <button type="submit" class="save btn btn-success">Odeslat</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

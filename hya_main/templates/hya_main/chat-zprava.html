@@ -1,0 +1,12 @@
+{% extends 'hya_main/chat.html' %}
+
+{% block zprava %}
+<h3>{{ message.predmet }}</h3>
+<small>
+    Pro: {{ message.prijemce.cele_jmeno }}<br>
+    Od: {{ message.odesilatel.cele_jmeno }}<br>
+    Čas: {{ message.odeslano }}
+</small>
+<hr>
+{{ message.obsah|linebreaksbr }}
+{% endblock %}
